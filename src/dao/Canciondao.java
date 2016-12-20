@@ -72,26 +72,27 @@ public class Canciondao implements cancioninterfaz {
     }
 
     @Override
-    public void modificarCancion(String titulo, Cantante cantante, String duraccion) {
-     ObjectContainer bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(),"musica.db4o");
-     try{
-         ObjectSet res = bd.queryByExample(new Cancion(titulo, null, null));
-         Cancion cancion = (Cancion) res.next();
-         cancion.setCantante(cantante);
-         cancion.setDuracion(duraccion);
-         bd.store(cancion);
-         JOptionPane.showMessageDialog(null, "Cancion modificada");
-         
-     }catch(Exception e){
-         JOptionPane.showMessageDialog(null, "Error al modfiicar cancion");
-         
-     }
-     finally{
-         bd.close();
-         
-     }
-
+    public void modificarCancion(String titulo, String titulo2, String nombre, String duraccion) {
+          ObjectContainer bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(),"musica.db4o");
+        try{
+            ObjectSet res=bd.queryByExample(new Cancion(titulo, null, null));
+            Cancion cancion = (Cancion)res.next();
+            ObjectSet res2 = bd.queryByExample(new Cantante(nombre, null));
+            Cantante cantante = (Cantante) res2.next();
+            cancion.setTitulo(titulo2);
+            cancion.setCantante(cantante);
+            cancion.setDuracion(duraccion);
+            bd.store(cancion);
+            
+            JOptionPane.showMessageDialog(null, "Cantante modificado");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al modificar cantante");
+        }finally{
+            bd.close();
+        }
     }
+
+    
 
     @Override
     public DefaultTableModel listarCanciones() {
@@ -137,6 +138,38 @@ public class Canciondao implements cancioninterfaz {
         bd.close();
         return cbm;
     }
+
+    @Override
+    public DefaultTableModel listarCancionesporTitulo(String titulo) {
+        ObjectContainer bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(),"musica.db4o");
+
+        DefaultTableModel dtm = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int colum) {
+                return false;
+            }
+        };
+
+        String[] columns = {"Título", "Cantante", "Duracción"};
+        Query q  = bd.query();
+        q.constrain(Cancion.class);
+        ObjectSet res = q.execute();
+        int i = 0;
+        Object data[][] = new String[res.size()][3];
+        while (res.hasNext()) {//recorres el iterador
+            Cancion c = (Cancion) res.next();
+            data[i][0] = c.getTitulo();
+            data[i][1] = c.getCantante().getNombre();
+            data[i][2] = c.getDuracion();
+
+            i++;
+        }
+        dtm.setDataVector(data, columns);
+        bd.close();
+        return dtm;
+    }
+    
+    
     
 }
 

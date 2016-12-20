@@ -37,8 +37,8 @@ public class fachada{
    public void eliminarCantante(String nombre){
        cantante.eliminarCantante(nombre);
    }
-   public void modificarCantante(String nombre, String estilomusical){
-       cantante.modificarCantante(nombre, estilomusical);
+   public void modificarCantante(String nombre, String nombre2, String estilomusical){
+       cantante.modificarCantante(nombre, nombre2, estilomusical);
    }
    
    //-----------Canciones--------------------//
@@ -53,8 +53,8 @@ public class fachada{
         cancion.eliminarCancion(titulo);
         
     }
-    public void modificarCancion(String titulo, Cantante cantante, String duraccion){
-        cancion.modificarCancion(titulo, cantante, duraccion);
+    public void modificarCancion(String titulo, String titulo2, String nombre, String duraccion){
+        cancion.modificarCancion(titulo, titulo2, nombre, duraccion);
         
     }
     public DefaultTableModel listarCanciones(){

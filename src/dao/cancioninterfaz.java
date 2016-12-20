@@ -16,8 +16,9 @@ import javax.swing.table.DefaultTableModel;
 public interface cancioninterfaz {
     public void añadirCancion(String titulo, String nombre, String duraccion);
     public void eliminarCancion(String titulo);
-    public void modificarCancion(String titulo, Cantante cantante, String duraccion);
+    public void modificarCancion(String titulo, String titulo2, String nombre, String duraccion);
     public DefaultTableModel listarCanciones();
+    public DefaultTableModel listarCancionesporTitulo(String titulo);
     public DefaultComboBoxModel comboCantantes();
     
 }

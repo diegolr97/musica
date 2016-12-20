@@ -95,11 +95,12 @@ public class Cantantedao implements cantanteinterfaz{
     }
 
     @Override
-    public void modificarCantante(String nombre, String estilomusical){
+    public void modificarCantante(String nombre, String nombre2, String estilomusical){
         ObjectContainer bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(),"musica.db4o");
         try{
             ObjectSet res=bd.queryByExample(new Cantante(nombre, null));
             Cantante cantante = (Cantante)res.next();
+            cantante.setNombre(nombre2);
             cantante.setEstilomusical(estilomusical);
             bd.store(cantante);
             
@@ -112,9 +113,5 @@ public class Cantantedao implements cantanteinterfaz{
     }
      
      
-
-    
-    
-    
-    
+  
 }

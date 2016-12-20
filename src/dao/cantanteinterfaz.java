@@ -15,7 +15,7 @@ public interface cantanteinterfaz {
     
     public void añadirCantante(String nombre, String estilomusical);
     public void eliminarCantante(String nombre);
-    public void modificarCantante(String nombre, String estilomusical);
+    public void modificarCantante(String nombre, String nombre2, String estilomusical);
     public DefaultTableModel listarCantantes();
     
     

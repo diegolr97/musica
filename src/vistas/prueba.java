@@ -20,10 +20,12 @@ import javax.swing.JOptionPane;
 public class prueba extends javax.swing.JFrame {
     
  fachada f = new fachada();
+ String nombre2;
+ String titulo2;
     
     public prueba() {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
         this.tbCantantes.setModel(f.listarCantantes());
         this.tbCanciones.setModel(f.listarCanciones());
         
@@ -66,6 +68,9 @@ public class prueba extends javax.swing.JFrame {
         txttituloCancion = new javax.swing.JTextField();
         txtduraccionCancion = new javax.swing.JFormattedTextField();
         cmbcantanteCancion = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        txtnombreBusqueda = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -177,6 +182,11 @@ public class prueba extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbCanciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbCancionesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbCanciones);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -189,8 +199,18 @@ public class prueba extends javax.swing.JFrame {
         });
 
         btneliminarCancion.setText("Eliminar");
+        btneliminarCancion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btneliminarCancionActionPerformed(evt);
+            }
+        });
 
         btnmodificarCancion.setText("Modificar");
+        btnmodificarCancion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmodificarCancionActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Titulo:");
 
@@ -205,6 +225,10 @@ public class prueba extends javax.swing.JFrame {
         }
 
         cmbcantanteCancion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel9.setText("Busqueda por Nombre");
+
+        jLabel10.setText("Nombre:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -230,7 +254,16 @@ public class prueba extends javax.swing.JFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtduraccionCancion, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbcantanteCancion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(33, 33, 33))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtnombreBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,12 +271,15 @@ public class prueba extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnguardarCancion)
                     .addComponent(jLabel6)
-                    .addComponent(txttituloCancion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txttituloCancion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btneliminarCancion)
                     .addComponent(jLabel7)
-                    .addComponent(cmbcantanteCancion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbcantanteCancion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtnombreBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnmodificarCancion)
@@ -332,11 +368,17 @@ public class prueba extends javax.swing.JFrame {
 //              
 //          }
         
-     
+     if(this.txtnombreCantante.getText().isEmpty()){
+         JOptionPane.showMessageDialog(null, "Rellene los Campos");
+     }else{
         f.añadirCantante(this.txtnombreCantante.getText(), (String) this.cmbestiloMusical.getSelectedItem());
         
         this.tbCantantes.setModel(f.listarCantantes());
         this.cmbcantanteCancion.setModel(f.comboCantantes());
+        
+        this.txtnombreCantante.setText("");
+     }
+        
 
     }//GEN-LAST:event_btnguardarCantanteActionPerformed
 
@@ -344,30 +386,52 @@ public class prueba extends javax.swing.JFrame {
          int fila = this.tbCantantes.rowAtPoint(evt.getPoint());
             if (fila > -1){                
                 this.txtnombreCantante.setText( String.valueOf( this.tbCantantes.getValueAt(fila, 0) ));
-                
-                
-                
-                
-            }
+                  nombre2 = ((String.valueOf( this.tbCantantes.getValueAt(fila, 0)) ));
+             }
     }//GEN-LAST:event_tbCantantesMouseClicked
 
     private void btneliminarCantanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarCantanteActionPerformed
         f.eliminarCantante(this.txtnombreCantante.getText());
         this.tbCantantes.setModel(f.listarCantantes());
         this.cmbcantanteCancion.setModel(f.comboCantantes());
-
+        this.txtnombreCantante.setText("");
     }//GEN-LAST:event_btneliminarCantanteActionPerformed
 
     private void btnmodificarCantanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarCantanteActionPerformed
-        f.modificarCantante(this.txtnombreCantante.getText(), (String) this.cmbestiloMusical.getSelectedItem());
+        f.modificarCantante(nombre2, this.txtnombreCantante.getText(), (String) this.cmbestiloMusical.getSelectedItem());
         this.tbCantantes.setModel(f.listarCantantes());
         this.cmbcantanteCancion.setModel(f.comboCantantes());
+        this.txtnombreCantante.setText("");
 
     }//GEN-LAST:event_btnmodificarCantanteActionPerformed
 
     private void btnguardarCancionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarCancionActionPerformed
-   f.añadirCancion(this.txttituloCancion.getText(), (String) this.cmbcantanteCancion.getSelectedItem(), this.txtduraccionCancion.getText());
+      if(this.txttituloCancion.getText().isEmpty() || this.txtduraccionCancion.getText().isEmpty() ){
+          JOptionPane.showMessageDialog(null, "Rellena los campos");
+      }else{
+        f.añadirCancion(this.txttituloCancion.getText(), (String) this.cmbcantanteCancion.getSelectedItem(), this.txtduraccionCancion.getText());
+        this.tbCanciones.setModel(f.listarCanciones());
+      }
     }//GEN-LAST:event_btnguardarCancionActionPerformed
+
+    private void btneliminarCancionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarCancionActionPerformed
+        f.eliminarCancion(this.txttituloCancion.getText());
+        this.tbCanciones.setModel(f.listarCanciones());
+    }//GEN-LAST:event_btneliminarCancionActionPerformed
+
+    private void tbCancionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCancionesMouseClicked
+        int fila = this.tbCanciones.rowAtPoint(evt.getPoint());
+            if (fila > -1){                
+                this.txttituloCancion.setText( String.valueOf( this.tbCanciones.getValueAt(fila, 0) ));
+                this.txtduraccionCancion.setText( String.valueOf( this.tbCanciones.getValueAt(fila, 2) ));
+                titulo2 = ((String.valueOf( this.tbCanciones.getValueAt(fila, 0)) ));
+             }
+    }//GEN-LAST:event_tbCancionesMouseClicked
+
+    private void btnmodificarCancionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarCancionActionPerformed
+        f.modificarCancion(titulo2, this.txttituloCancion.getText(), (String) this.cmbcantanteCancion.getSelectedItem(), this.txtduraccionCancion.getText() );
+        this.tbCanciones.setModel(f.listarCanciones());
+    }//GEN-LAST:event_btnmodificarCancionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -414,6 +478,7 @@ public class prueba extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbcantanteCancion;
     private javax.swing.JComboBox<String> cmbestiloMusical;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -421,6 +486,7 @@ public class prueba extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -430,6 +496,7 @@ public class prueba extends javax.swing.JFrame {
     private javax.swing.JTable tbCanciones;
     private javax.swing.JTable tbCantantes;
     private javax.swing.JFormattedTextField txtduraccionCancion;
+    private javax.swing.JTextField txtnombreBusqueda;
     private javax.swing.JTextField txtnombreCantante;
     private javax.swing.JTextField txttituloCancion;
     // End of variables declaration//GEN-END:variables
