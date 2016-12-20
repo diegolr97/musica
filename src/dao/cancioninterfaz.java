@@ -18,7 +18,8 @@ public interface cancioninterfaz {
     public void eliminarCancion(String titulo);
     public void modificarCancion(String titulo, String titulo2, String nombre, String duraccion);
     public DefaultTableModel listarCanciones();
-    public DefaultTableModel listarCancionesporTitulo(String titulo);
+    public DefaultTableModel listarCancionesporTitulo(String nombre);
+    public DefaultTableModel listarCancionesporDuraccion(String duracion, String duracion2);
     public DefaultComboBoxModel comboCantantes();
     
 }

@@ -64,5 +64,11 @@ public class fachada{
     public DefaultComboBoxModel comboCantantes(){
         return cancion.comboCantantes();
     }
+    public DefaultTableModel listarCancionesporTitulo(String nombre) {
+        return cancion.listarCancionesporTitulo(nombre);
+    }
+    public DefaultTableModel listarCancionesporDuraccion(String duracion, String duracion2){
+        return cancion.listarCancionesporDuraccion(duracion, duracion2);
+    }
     
 }
