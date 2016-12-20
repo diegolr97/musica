@@ -15,6 +15,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class fachada{
     
+    
+    //-----------------Catante------------------//
+    
     private cantanteinterfaz cantante = new Cantantedao();
 
     
@@ -33,5 +36,7 @@ public class fachada{
    public void modificarCantante(String nombre, String estilomusical){
        cantante.modificarCantante(nombre, estilomusical);
    }
+   
+   //-----------Canciones--------------------//
     
 }
