@@ -11,6 +11,7 @@ import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,11 +22,13 @@ import javax.swing.table.DefaultTableModel;
 public class Canciondao implements cancioninterfaz {
 
     @Override
-    public void añadirCancion(String titulo, Cantante cantante, String duraccion) {
+    public void añadirCancion(String titulo, String nombre, String duraccion) {
         
       ObjectContainer bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(),"musica.db4o");
 
-        try{
+      try{
+          ObjectSet res = bd.queryByExample(new Cantante(nombre, null));
+            Cantante cantante = (Cantante) res.next();
             Cancion cancion = new Cancion(titulo, cantante, duraccion);
             bd.store(cancion);
             JOptionPane.showMessageDialog(null, "Cancion añadida");
@@ -37,12 +40,13 @@ public class Canciondao implements cancioninterfaz {
             bd.close();
         
     }
-        
-        
-        
-        
-        
     }
+        
+        
+        
+        
+        
+    
 
     @Override
     public void eliminarCancion(String titulo) {
@@ -105,17 +109,33 @@ public class Canciondao implements cancioninterfaz {
         q.constrain(Cancion.class);
         ObjectSet res = q.execute();
         int i = 0;
-        Object data[][] = new String[res.size()][2];
+        Object data[][] = new String[res.size()][3];
         while (res.hasNext()) {//recorres el iterador
             Cancion c = (Cancion) res.next();
-//            data[i][0] = c();
-//            data[i][1] = c.getEstilomusical();
+            data[i][0] = c.getTitulo();
+            data[i][1] = c.getCantante().getNombre();
+            data[i][2] = c.getDuracion();
 
             i++;
         }
         dtm.setDataVector(data, columns);
         bd.close();
         return dtm;
+    }
+    @Override
+     public DefaultComboBoxModel comboCantantes() {
+        ObjectContainer bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(),"musica.db4o");
+        DefaultComboBoxModel cbm = new DefaultComboBoxModel();
+        Query q = bd.query();
+        q.constrain(Cantante.class);
+        ObjectSet res = q.execute();
+
+        while (res.hasNext()) {
+            Cantante cantante = (Cantante) res.next();
+            cbm.addElement(cantante.getNombre());
+        }
+        bd.close();
+        return cbm;
     }
     
 }

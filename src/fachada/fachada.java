@@ -5,8 +5,12 @@
  */
 package fachada;
 
+import clases.Cantante;
+import dao.Canciondao;
 import dao.Cantantedao;
+import dao.cancioninterfaz;
 import dao.cantanteinterfaz;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -38,5 +42,27 @@ public class fachada{
    }
    
    //-----------Canciones--------------------//
+   
+   private cancioninterfaz cancion = new Canciondao();
+   
+   public void añadirCancion(String titulo, String nombre, String duraccion){
+       cancion.añadirCancion(titulo, nombre, duraccion);
+       
+   }
+    public void eliminarCancion(String titulo){
+        cancion.eliminarCancion(titulo);
+        
+    }
+    public void modificarCancion(String titulo, Cantante cantante, String duraccion){
+        cancion.modificarCancion(titulo, cantante, duraccion);
+        
+    }
+    public DefaultTableModel listarCanciones(){
+        return cancion.listarCanciones();
+        
+    }
+    public DefaultComboBoxModel comboCantantes(){
+        return cancion.comboCantantes();
+    }
     
 }
